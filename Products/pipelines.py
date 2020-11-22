@@ -17,6 +17,7 @@ class SQLlitePipeline(object):
         try:
             self.cursr.execute('''
                 CREATE TABLE Amazon_data (
+                    ID TEXT,
                     Product_Name TEXT,
                     Product_Price TEXT,
                     Product_Link TEXT,
@@ -37,8 +38,9 @@ class SQLlitePipeline(object):
 
     def process_item(self, item, spider):
         self.cursr.execute('''
-            INSERT INTO Amazon_data (Product_Name, Product_Price, Product_Link, Website_name, Seller, Machine_Name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO Amazon_data (ID, Product_Name, Product_Price, Product_Link, Website_name, Seller, Machine_Name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
         ''', (
+            item.get('ID'),
             item.get('pd_name'),
             item.get('pd_price'),
             item.get('pd_link'),

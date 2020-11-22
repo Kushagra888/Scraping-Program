@@ -35,3 +35,7 @@ class ProductsItem(scrapy.Item):
     website_name = scrapy.Field(
         output_processor=TakeFirst()
     )
+
+    ID = scrapy.Field(
+        output_processor=TakeFirst()
+    )

@@ -222,6 +222,7 @@ class AmazonSpider(scrapy.Spider):
             driver.close()
 
     def parse(self, response):
+        id_count = 1
         for html in self.page_sources:
             resp = Selector(text=html)
 
@@ -229,7 +230,9 @@ class AmazonSpider(scrapy.Spider):
 
             for link in links:
                 url=response.urljoin(link)
-                yield scrapy.Request(url=url, callback=self.parse_pd)
+                yield scrapy.Request(url=url, callback=self.parse_pd, meta={'ID': id_count})
+
+            id_count += 1
 
     def remove_char(self, val):
         if val != None:
@@ -238,6 +241,9 @@ class AmazonSpider(scrapy.Spider):
             return val
 
     def parse_pd(self, response):
+
+        ID = response.meta.get('ID')
+
         pd_name=response.xpath(
             'normalize-space(//span[@id="productTitle"]/text())').get()
 
@@ -250,6 +256,7 @@ class AmazonSpider(scrapy.Spider):
         pd_link = response.url
 
         loader = ItemLoader(item=ProductsItem(), response=response)
+        loader.add_value('ID', ID)
         loader.add_value('image_urls', pd_img_url)
         loader.add_value('p_name', pd_name)
         loader.add_value('pd_name', pd_name)
