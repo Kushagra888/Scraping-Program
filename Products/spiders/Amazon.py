@@ -244,12 +244,12 @@ class AmazonSpider(scrapy.Spider):
         pd_price=self.remove_char(response.xpath(
             '//td[@class="a-span12"]/span[1]/text()').get())
 
-        pd_img_url=response.xpath(
+        pd_img_url = response.xpath(
             'normalize-space(//div[@id="imgTagWrapperId"]/img/@src)').get()
 
-        pd_link=response.url
+        pd_link = response.url
 
-        loader=ItemLoader(item=ProductsItem(), response=response)
+        loader = ItemLoader(item=ProductsItem(), response=response)
         loader.add_value('image_urls', pd_img_url)
         loader.add_value('p_name', pd_name)
         loader.add_value('pd_name', pd_name)
@@ -259,8 +259,8 @@ class AmazonSpider(scrapy.Spider):
 
         loader.add_value('pd_price', pd_price)
 
-        now=datetime.now()
-        time=now.strftime("%H:%M:%S %b-%d-%Y")
+        utc_now = datetime.utcnow()
+        time = utc_now.strftime("%H:%M:%S %b-%d-%Y")
 
         loader.add_value('machine_name', socket.gethostname())
         loader.add_value('time', time)
