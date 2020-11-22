@@ -31,3 +31,7 @@ class ProductsItem(scrapy.Item):
     pd_link = scrapy.Field(
         output_processor=TakeFirst()
     )
+
+    website_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )

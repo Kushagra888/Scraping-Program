@@ -266,4 +266,8 @@ class AmazonSpider(scrapy.Spider):
         loader.add_value('time', time)
         loader.add_value('pd_link', pd_link)
 
+        website_name = self.start_urls[0]
+
+        loader.add_value('website_name', website_name)
+
         yield loader.load_item()
