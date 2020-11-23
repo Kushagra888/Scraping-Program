@@ -21,10 +21,10 @@ class SQLlitePipeline(object):
                     Product_Name TEXT,
                     Product_Price TEXT,
                     Product_Link TEXT,
-                    Website_name TEXT,
+                    Website_Name TEXT,
                     Seller TEXT,
                     Machine_Name TEXT,
-                    Time TEXT
+                    UTC_Time TEXT
                 )
             ''')
             self.db.commit()
@@ -38,7 +38,7 @@ class SQLlitePipeline(object):
 
     def process_item(self, item, spider):
         self.cursr.execute('''
-            INSERT INTO Amazon_data (ID, Product_Name, Product_Price, Product_Link, Website_name, Seller, Machine_Name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO Amazon_data (ID, Product_Name, Product_Price, Product_Link, Website_Name, Seller, Machine_Name, UTC_Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
         ''', (
             item.get('ID'),
             item.get('pd_name'),
