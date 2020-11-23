@@ -244,37 +244,40 @@ class AmazonSpider(scrapy.Spider):
 
         ID = response.meta.get('ID')
 
-        pd_name=response.xpath(
+        Product_name=response.xpath(
             'normalize-space(//span[@id="productTitle"]/text())').get()
 
-        pd_price=self.remove_char(response.xpath(
+        Product_price=self.remove_char(response.xpath(
             '//td[@class="a-span12"]/span[1]/text()').get())
 
         pd_img_url = response.xpath(
             'normalize-space(//div[@id="imgTagWrapperId"]/img/@src)').get()
 
-        pd_link = response.url
+        Product_link = response.url
 
         loader = ItemLoader(item=ProductsItem(), response=response)
-        loader.add_value('ID', ID)
         loader.add_value('image_urls', pd_img_url)
-        loader.add_value('p_name', pd_name)
-        loader.add_value('pd_name', pd_name)
+        loader.add_value('ID', ID)
+        loader.add_value('Product_name', Product_name)
 
-        if pd_price is None:
-            pd_price='₹0'
+        if Product_price is None:
+            Product_price='₹0'
 
-        loader.add_value('pd_price', pd_price)
+        loader.add_value('Product_price', Product_price)
 
         utc_now = datetime.utcnow()
-        time = utc_now.strftime("%H:%M:%S %b-%d-%Y")
+        Time = utc_now.strftime("%H:%M:%S %b-%d-%Y")
 
-        loader.add_value('machine_name', socket.gethostname())
-        loader.add_value('time', time)
-        loader.add_value('pd_link', pd_link)
+        loader.add_value('Machine_name', socket.gethostname())
+        loader.add_value('Time', Time)
+        loader.add_value('Product_link', Product_link)
 
-        website_name = self.start_urls[0]
+        Website_name = self.start_urls[0]
 
-        loader.add_value('website_name', website_name)
+        loader.add_value('Website_name', Website_name)
+
+        Seller = 'Amazon'
+
+        loader.add_value('Seller', Seller)
 
         yield loader.load_item()

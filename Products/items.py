@@ -11,31 +11,32 @@ from scrapy.loader.processors import TakeFirst
 class ProductsItem(scrapy.Item):
     image_urls = scrapy.Field()
     images = scrapy.Field()
-    p_name = scrapy.Field(
-        output_processor = TakeFirst()
-    )
-
-    pd_name = scrapy.Field(
-        output_processor=TakeFirst()
-    )
-    pd_price = scrapy.Field(
-        output_processor=TakeFirst()
-    )
-    machine_name = scrapy.Field(
-        output_processor=TakeFirst()
-    )
-    time = scrapy.Field(
-        output_processor=TakeFirst()
-    )
-
-    pd_link = scrapy.Field(
-        output_processor=TakeFirst()
-    )
-
-    website_name = scrapy.Field(
-        output_processor=TakeFirst()
-    )
 
     ID = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+    Product_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    Product_price = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    Machine_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+    Time = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+    Product_link = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+    Website_name = scrapy.Field(
+        output_processor=TakeFirst()
+    )
+
+    Seller = scrapy.Field(
         output_processor=TakeFirst()
     )

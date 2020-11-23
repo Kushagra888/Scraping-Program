@@ -100,5 +100,4 @@ FEED_FORMAT = 'CSV'
 
 FEED_URI = './Amazon_csv.csv'
 
-FEED_EXPORT_FIELDS = ['pd_name', 'pd_price', 'machine_name', 'time', 'pd_link']
-# You can comment out the above FEED_EXPORT_FIELDS if you want the base64 column!!!
+FEED_EXPORT_FIELDS = ['ID', 'Product_name', 'Product_price', 'Product_link', 'Website_name', 'Seller', 'Machine_name', 'Time']

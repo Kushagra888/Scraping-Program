@@ -18,13 +18,13 @@ class SQLlitePipeline(object):
             self.cursr.execute('''
                 CREATE TABLE Amazon_data (
                     ID TEXT,
-                    Product_Name TEXT,
-                    Product_Price TEXT,
-                    Product_Link TEXT,
-                    Website_Name TEXT,
+                    Product_name TEXT,
+                    Product_price TEXT,
+                    Product_link TEXT,
+                    Website_name TEXT,
                     Seller TEXT,
-                    Machine_Name TEXT,
-                    UTC_Time TEXT
+                    Machine_name TEXT,
+                    Time TEXT
                 )
             ''')
             self.db.commit()
@@ -38,16 +38,16 @@ class SQLlitePipeline(object):
 
     def process_item(self, item, spider):
         self.cursr.execute('''
-            INSERT INTO Amazon_data (ID, Product_Name, Product_Price, Product_Link, Website_Name, Seller, Machine_Name, UTC_Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO Amazon_data (ID, Product_name, Product_price, Product_link, Website_name, Seller, Machine_name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
         ''', (
             item.get('ID'),
-            item.get('pd_name'),
-            item.get('pd_price'),
-            item.get('pd_link'),
-            item.get('website_name'),
-            'Amazon',
-            item.get('machine_name'),
-            item.get('time')
+            item.get('Product_name'),
+            item.get('Product_price'),
+            item.get('Product_link'),
+            item.get('Website_name'),
+            item.get('Seller'),
+            item.get('Machine_name'),
+            item.get('Time')
         ))
         self.db.commit()
         return item
@@ -56,7 +56,7 @@ class SQLlitePipeline(object):
 class AmazonImagesPipeline(ImagesPipeline):
 
     def get_media_requests(self, item, info):
-        return [Request(x, meta={'pname': item.get('p_name')}) for x in item.get(self.images_urls_field, [])]
+        return [Request(x, meta={'pname': item.get('Product_name')}) for x in item.get(self.images_urls_field, [])]
 
 
     def file_path(self, request, response=None, info=None):
