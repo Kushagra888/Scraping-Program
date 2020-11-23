@@ -1,5 +1,7 @@
 import scrapy
 import csv
+import os
+from datetime import date
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from Products.spiders.Amazon import AmazonSpider
@@ -45,15 +47,27 @@ for col in read:
         pf = None
     p_fltrs.append(pf)
 
-process = CrawlerProcess(settings=get_project_settings())
+try:
+    process = CrawlerProcess(settings=get_project_settings())
+    process.crawl(AmazonSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, conditions=p_cons, product_filters=p_fltrs)
+    process.start()
+
+except Exception as exptn:
+    error = str(repr(exptn))
+    now = date.today()
+
+    if os.path.exists(f'{now}.log'):
+        with open(f'{now}.log', 'a') as k:
+            k.write('\n' + error)
+    else:
+        with open(f'{now}.log', 'w') as d:
+            d.write(error)
+
+
+f.close()
 
 #create log files append only
 #create a new file for each day
-
-process.crawl(AmazonSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, conditions=p_cons, product_filters=p_fltrs)
-process.start()
-
-f.close()
 
 #try..catch block
 # Write a program to read input from text file or database.
