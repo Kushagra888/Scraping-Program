@@ -52,7 +52,7 @@ class AmazonSpider(scrapy.Spider):
                 raise CloseSpider('High Price cannot be a empty value.')
             
             try:
-                element = WebDriverWait(driver, 20).until(
+                element = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "twotabsearchtextbox"))
                 )
                 if element == True:
@@ -80,10 +80,10 @@ class AmazonSpider(scrapy.Spider):
                     raise CloseSpider('High Price value must be an integer!')
             
             try:
-                element1 = WebDriverWait(driver, 20).until(
+                element1 = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "low-price"))
                 )
-                element2 = WebDriverWait(driver, 20).until(
+                element2 = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "high-price"))
                 )
                 if element1 == True or element2 == True:
@@ -109,10 +109,10 @@ class AmazonSpider(scrapy.Spider):
                     self.high_pr.send_keys(Keys.ENTER)
 
             try:
-                element1 = WebDriverWait(driver, 20).until(
+                element1 = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'New')]"))
                 )
-                element2 = WebDriverWait(driver, 20).until(
+                element2 = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'Used')]"))
                 )
                 if element1 == True or element2 == True:
@@ -140,10 +140,10 @@ class AmazonSpider(scrapy.Spider):
                     pass
             
             try:
-                elementA = WebDriverWait(driver, 10).until(
+                elementA = WebDriverWait(driver, 5).until(
                 EC.presence_of_element_located((By.ID, "s-result-sort-select"))
                 )
-                elementB = WebDriverWait(driver, 10).until(
+                elementB = WebDriverWait(driver, 5).until(
                 EC.element_to_be_clickable((By.ID, "s-result-sort-select"))
                 )
                 if elementA == True or elementB == True:
@@ -189,7 +189,7 @@ class AmazonSpider(scrapy.Spider):
                 pro_num=[]
 
                 try:
-                    element = WebDriverWait(driver, 20).until(
+                    element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located((By.XPATH, "//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left']/following::span[1]/text()"))
                     )
                     if element == True:
@@ -214,8 +214,17 @@ class AmazonSpider(scrapy.Spider):
                         raise CloseSpider(
                             'Please enter a valid brand name! or do not pass any brand name if you do not want any brand name.')
 
-                check_box = driver.find_element_by_xpath(f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]")
-                check_box.click()
+                try:
+                    ele = WebDriverWait(driver, 5).until(
+                        EC.element_to_be_clickable((By.XPATH,f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]"))
+                    )
+                    if ele == True:
+                        pass
+                except:
+                    pass
+                finally:
+                    check_box = driver.find_element_by_xpath(f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]")
+                    check_box.click()
 
             self.page_sources.append(driver.page_source)
 
