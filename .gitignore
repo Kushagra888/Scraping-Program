@@ -1,2 +1,2 @@
-*.pyc
-*.log
+Products/__pycache__
+Products/spiders/__pycache__
