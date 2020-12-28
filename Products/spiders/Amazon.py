@@ -28,8 +28,8 @@ class AmazonSpider(scrapy.Spider):
  
         for i in range(len(product_names)):
  
-            # chrome_options = Options()
-            # chrome_options.add_argument('--headless')
+            chrome_options = Options()
+            chrome_options.add_argument('--headless')
  
             chrome_path = which('chromedriver')
  
