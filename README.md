@@ -1,2 +1,2 @@
 # Scraper
-A Scraping software.
+Scraping software.
