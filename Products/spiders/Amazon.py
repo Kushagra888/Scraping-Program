@@ -225,6 +225,13 @@ class AmazonSpider(scrapy.Spider):
                         EC.element_to_be_clickable(
                             (By.XPATH, f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]"))
                     )
+                    
+                    try:
+                        see_more_btn = driver.find_element_by_xpath("(//span[@class='a-expander-prompt'])[2]")
+                        see_more_btn.click()
+                    except:
+                        pass
+
                     check_box = driver.find_element_by_xpath(
                         f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]")
                     check_box.click()
@@ -297,4 +304,3 @@ class AmazonSpider(scrapy.Spider):
         loader.add_value('Seller', Seller)
  
         yield loader.load_item()
- 
