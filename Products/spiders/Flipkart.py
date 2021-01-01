@@ -213,19 +213,26 @@ class FlipkartSpider(scrapy.Spider):
             return val.strip('\xa0')
         elif val == None:
             return val
+
+    def corrector(self, nm):
+        if len(nm) > 1:
+            return ''.join(nm)
+        else:
+            return nm[0]
  
     def parse_pd(self, response):
  
         ID = response.meta.get('ID')
  
-        Product_name = response.xpath(
-            'normalize-space(//span[@id="productTitle"]/text())').get()
+        Product_name_temp = self.corrector(response.xpath("//span[@class='B_NuCI']/text()").getall())
+
+        Product_name = self.remove_char(Product_name_temp)
  
         Product_price = self.remove_char(response.xpath(
-            '//td[@class="a-span12"]/span[1]/text()').get())
+            '//div[@class="_30jeq3 _16Jk6d"]/text()').get())
  
         pd_img_url = response.xpath(
-            'normalize-space(//div[@id="imgTagWrapperId"]/img/@src)').get()
+            'normalize-space(//div[@class="CXW8mj _3nMexc"]/img/@src)').get()
  
         Product_link = response.url
  
