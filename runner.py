@@ -74,6 +74,6 @@ f.close()
 # input example: seach criteria, price range, brand name, new/used, customer rating, [website name] for scraping.
 # how many pages we need to scrape
 # store Output in the database or CSV file
-# date and time when scraping has run, machine name where it was run, Product Name, Product price, URL, seller name (Amazon, flipcart, or third party), images.
+# date and time when scraping has run, machine name where it was run, Product Name, Product price, URL, seller name (Amazon, flipkart, or third party), images.
 # ML
 # Build ML model using relevency alogorithm to get the best match.
