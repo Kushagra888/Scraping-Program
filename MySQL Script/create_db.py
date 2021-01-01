@@ -4,4 +4,4 @@ db = mysql.connector.connect(host='localhost', user='Kushagra', passwd='kushagra
 
 cursor = db.cursor()
 
-cursor.execute('CREATE DATABASE amazon')
+cursor.execute('CREATE DATABASE scraping_project')

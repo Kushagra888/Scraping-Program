@@ -12,11 +12,11 @@ from itemadapter import ItemAdapter
 
 class SQLlitePipeline(object):
     def open_spider(self, spider):
-        self.db = mysql.connector.connect(host='localhost', user='Kushagra', passwd='kushagrasql123pass', database='amazon')
+        self.db = mysql.connector.connect(host='localhost', user='Kushagra', passwd='kushagrasql123pass', database='scraping_project')
         self.cursr = self.db.cursor()
         try:
             self.cursr.execute('''
-                CREATE TABLE Amazon_data (
+                CREATE TABLE Web_data (
                     ID TEXT,
                     Product_name TEXT,
                     Product_price TEXT,
@@ -38,7 +38,7 @@ class SQLlitePipeline(object):
 
     def process_item(self, item, spider):
         self.cursr.execute('''
-            INSERT INTO Amazon_data (ID, Product_name, Product_price, Product_link, Website_name, Seller, Machine_name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
+            INSERT INTO Web_data (ID, Product_name, Product_price, Product_link, Website_name, Seller, Machine_name, Time) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)
         ''', (
             item.get('ID'),
             item.get('Product_name'),
@@ -53,7 +53,7 @@ class SQLlitePipeline(object):
         return item
 
 
-class AmazonImagesPipeline(ImagesPipeline):
+class FlipkartImagesPipeline(ImagesPipeline):
 
     def get_media_requests(self, item, info):
         return [Request(x, meta={'pname': item.get('Product_name')}) for x in item.get(self.images_urls_field, [])]
@@ -84,5 +84,5 @@ class AmazonImagesPipeline(ImagesPipeline):
             return self.image_key(url)
         ## end of deprecation warning block
         filename = request.meta['pname'].replace(':','')
-        return 'Amazon_Images/%s.jpg' % (filename)
+        return 'Flipkart_Images/%s.jpg' % (filename)
         
