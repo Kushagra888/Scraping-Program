@@ -14,14 +14,14 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
- 
+
  
 class FlipkartSpider(scrapy.Spider):
     name = 'Flipkart'
 
     start_urls = ['https://www.flipkart.com']
  
-    def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
+    def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, product_filters=None, *args, **kwargs):
         super(FlipkartSpider, self).__init__(*args, **kwargs)
  
         self.page_sources = []
@@ -121,35 +121,6 @@ class FlipkartSpider(scrapy.Spider):
  
             #     elif low_prices[i] != None and high_prices[i] != None:
             #         self.high_pr.send_keys(Keys.ENTER)
- 
-            # try:
-            #     element1 = WebDriverWait(driver, 5).until(
-            #         EC.element_to_be_clickable(
-            #             (By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'New')]"))
-            #     )
-            #     element2 = WebDriverWait(driver, 5).until(
-            #         EC.element_to_be_clickable(
-            #             (By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'Used')]"))
-            #     )
-            #     if element1 == True or element2 == True:
-            #         pass
-            # except:
-            #     pass
-            # finally:
-            #     if conditions[i] != None:
-            #         if conditions[i].lower() == 'new':
-            #             New = driver.find_element_by_xpath(
-            #                 "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'New')]")
-            #             New.click()
- 
-            #         elif conditions[i].lower() == 'used':
-            #             Used = driver.find_element_by_xpath(
-            #                 "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'Used')]")
-            #             Used.click()
- 
-            #         else:
-            #             raise CloseSpider(
-            #                 'Please enter a valid Item Condition! or do not pass any condition if you do not want any condition')
  
             if product_filters[i] != None:
                 if product_filters[i].lower() == 'relevance':
