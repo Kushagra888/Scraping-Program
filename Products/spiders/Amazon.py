@@ -150,6 +150,8 @@ class AmazonSpider(scrapy.Spider):
                 elementB = WebDriverWait(driver, 5).until(
                     EC.element_to_be_clickable((By.ID, "s-result-sort-select"))
                 )
+                if elementA or elementB == True:
+                    pass
                 if product_filters[i] != None and product_filters[i] != 'featured':
                     if product_filters[i].lower() == 'low to high':
                         sort_btn = driver.find_element_by_id(
@@ -199,10 +201,6 @@ class AmazonSpider(scrapy.Spider):
                 pro_num = []
  
                 try:
-                    # WebDriverWait(driver, 5).until(
-                    #     EC.presence_of_element_located(
-                    #         (By.XPATH, "//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left']/following::span[1]/text()"))
-                    # )
                     names_list = resp.xpath(
                         "//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left']/following::span[1]/text()").getall()
  
