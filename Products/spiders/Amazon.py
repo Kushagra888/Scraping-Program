@@ -18,7 +18,7 @@ from selenium.webdriver.support import expected_conditions as EC
  
 class AmazonSpider(scrapy.Spider):
     name = 'Amazon'
- 
+    kushagra = 'branch_flipkart'
     start_urls = ['https://www.amazon.in']
  
     def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
