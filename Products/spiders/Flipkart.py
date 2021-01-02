@@ -199,8 +199,7 @@ class FlipkartSpider(scrapy.Spider):
         for html in self.page_sources:
             resp = Selector(text=html)
  
-            links = resp.xpath(
-                "//div[@class='a-section a-spacing-none']/h2/a/@href").getall()
+            links = resp.xpath("//div[@class='_13oc-S']/div/div/a[1]/@href").getall()
  
             for link in links:
                 url = response.urljoin(link)
@@ -224,15 +223,16 @@ class FlipkartSpider(scrapy.Spider):
  
         ID = response.meta.get('ID')
  
-        Product_name_temp = self.corrector(response.xpath("//span[@class='B_NuCI']/text()").getall())
+        templ = self.corrector(response.xpath("//span[@class='B_NuCI']/text()").getall())
 
-        Product_name = self.remove_char(Product_name_temp)
+        Product_name = self.remove_char(templ)
  
         Product_price = self.remove_char(response.xpath(
             '//div[@class="_30jeq3 _16Jk6d"]/text()').get())
  
-        pd_img_url = response.xpath(
-            'normalize-space(//div[@class="CXW8mj _3nMexc"]/img/@src)').get()
+        value_url = response.xpath('normalize-space((//div[@class="q6DClP"])[1]/@style)').get()
+
+        pd_img_url = value_url[21:-1].replace('128','240')
  
         Product_link = response.url
  

@@ -71,7 +71,7 @@ ITEM_PIPELINES = {
 
 IMAGES_STORE = 'C:/Users/kushu/Desktop/Products'
 
-DOWNLOAD_TIMEOUT = 2400
+DOWNLOAD_TIMEOUT = 3600
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
