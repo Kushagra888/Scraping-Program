@@ -16,13 +16,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
  
  
-class AmazonSpider(scrapy.Spider):
-    name = 'Amazon'
+class SnapdealSpider(scrapy.Spider):
+    name = 'Snapdeal'
  
-    start_urls = ['https://www.amazon.in']
+    start_urls = ['https://www.snapdeal.com']
  
     def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
-        super(AmazonSpider, self).__init__(*args, **kwargs)
+        super(SnapdealSpider, self).__init__(*args, **kwargs)
  
         self.page_sources = []
  
@@ -37,7 +37,7 @@ class AmazonSpider(scrapy.Spider):
  
             driver.set_window_size(1920, 1080)
  
-            driver.get('https://www.amazon.in')
+            driver.get('https://www.snapdeal.com')
  
             if product_names[i] == '' or product_names[i] == None:
                 raise CloseSpider('Please enter a product name.')
@@ -297,7 +297,7 @@ class AmazonSpider(scrapy.Spider):
  
         loader.add_value('Website_name', Website_name)
  
-        Seller = 'Amazon'
+        Seller = 'Snapdeal'
  
         loader.add_value('Seller', Seller)
  

@@ -53,7 +53,7 @@ class SQLlitePipeline(object):
         return item
 
 
-class AmazonImagesPipeline(ImagesPipeline):
+class SnapdealImagesPipeline(ImagesPipeline):
 
     def get_media_requests(self, item, info):
         return [Request(x, meta={'pname': item.get('Product_name')}) for x in item.get(self.images_urls_field, [])]
@@ -84,5 +84,5 @@ class AmazonImagesPipeline(ImagesPipeline):
             return self.image_key(url)
         ## end of deprecation warning block
         filename = request.meta['pname'].strip(':').strip('/').strip('\\')
-        return 'Amazon_Images/%s.jpg' % (filename)
+        return 'Snapdeal_Images/%s.jpg' % (filename)
         
