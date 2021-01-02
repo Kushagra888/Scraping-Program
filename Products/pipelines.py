@@ -83,6 +83,6 @@ class FlipkartImagesPipeline(ImagesPipeline):
             _warn()
             return self.image_key(url)
         ## end of deprecation warning block
-        filename = request.meta['pname']
+        filename = request.meta['pname'].replace(':','').replace('/','').strip('\\')
         return 'Flipkart_Images/%s.jpg' % (filename)
         
