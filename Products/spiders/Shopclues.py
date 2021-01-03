@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import socket
+import re
 import mysql.connector
 from shutil import which
 from datetime import datetime
@@ -154,6 +155,9 @@ class ShopcluesSpider(scrapy.Spider):
                     for nm in names_list:
                         if nm != None:
                             nm = nm.strip()
+                            result = re.search(r'(\d+)', nm)
+                            rem = nm[result.start()-2:result.end()+1]
+                            nm = nm.strip(rem)
                         pro_names.append(nm)
  
                     for s in range(1, len(pro_names)+1):
