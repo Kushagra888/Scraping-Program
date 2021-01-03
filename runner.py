@@ -13,7 +13,6 @@ p_names = []
 low_prs = []
 high_prs = []
 brands = []
-p_cons = []
 p_fltrs = []
 
 for col in read:
@@ -37,11 +36,6 @@ for col in read:
         bn = None
     brands.append(bn)
 
-    cn = col.get('condition')
-    if cn == '':
-        cn = None
-    p_cons.append(cn)
-
     pf = col.get('product_filter')
     if pf == '':
         pf = None
@@ -49,7 +43,7 @@ for col in read:
 
 try:
     process = CrawlerProcess(settings=get_project_settings())
-    process.crawl(SnapdealSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, conditions=p_cons, product_filters=p_fltrs)
+    process.crawl(SnapdealSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, product_filters=p_fltrs)
     process.start()
 
 except Exception as exptn:

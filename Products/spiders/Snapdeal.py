@@ -21,7 +21,7 @@ class SnapdealSpider(scrapy.Spider):
  
     start_urls = ['https://www.snapdeal.com']
  
-    def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
+    def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, product_filters=None, *args, **kwargs):
         super(SnapdealSpider, self).__init__(*args, **kwargs)
  
         self.page_sources = []
