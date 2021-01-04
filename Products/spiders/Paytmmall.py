@@ -19,7 +19,7 @@ from selenium.webdriver.support import expected_conditions as EC
 class PaytmmallSpider(scrapy.Spider):
     name = 'Paytmmall'
  
-    start_urls = ['https://www.amazon.in']
+    start_urls = ['https://paytmmall.com']
  
     def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
         super(PaytmmallSpider, self).__init__(*args, **kwargs)
@@ -28,8 +28,8 @@ class PaytmmallSpider(scrapy.Spider):
  
         for i in range(len(product_names)):
  
-            chrome_options = Options()
-            chrome_options.add_argument('--headless')
+            # chrome_options = Options()
+            # chrome_options.add_argument('--headless')
  
             chrome_path = which('chromedriver')
  
@@ -37,7 +37,7 @@ class PaytmmallSpider(scrapy.Spider):
  
             driver.set_window_size(1920, 1080)
  
-            driver.get('https://www.amazon.in')
+            driver.get('https://paytmmall.com')
  
             if product_names[i] == '' or product_names[i] == None:
                 raise CloseSpider('Please enter a product name.')
@@ -54,139 +54,102 @@ class PaytmmallSpider(scrapy.Spider):
             try:
                 element = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
-                        (By.ID, "twotabsearchtextbox"))
+                        (By.ID, "searchInput"))
                 )
                 if element == True:
                     pass
             except:
                 pass
             finally:
-                input_box = driver.find_element_by_id('twotabsearchtextbox')
+                input_box = driver.find_element_by_id('searchInput')
                 input_box.send_keys(product_names[i])
                 input_box.send_keys(Keys.ENTER)
  
-            if high_prices[i] == 0 or high_prices[i] == '0':
-                raise CloseSpider('High price value cannot be zero!!!')
+            # if high_prices[i] == 0 or high_prices[i] == '0':
+            #     raise CloseSpider('High price value cannot be zero!!!')
  
-            if low_prices[i] != None:
-                try:
-                    low = int(low_prices[i])
-                except ValueError:
-                    raise CloseSpider('Low Price value must be an integer!')
+            # if low_prices[i] != None:
+            #     try:
+            #         low = int(low_prices[i])
+            #     except ValueError:
+            #         raise CloseSpider('Low Price value must be an integer!')
  
-            if high_prices[i] != None:
-                try:
-                    high = int(high_prices[i])
-                except ValueError:
-                    raise CloseSpider('High Price value must be an integer!')
+            # if high_prices[i] != None:
+            #     try:
+            #         high = int(high_prices[i])
+            #     except ValueError:
+            #         raise CloseSpider('High Price value must be an integer!')
  
-            try:
-                element1 = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.ID, "low-price"))
-                )
-                element2 = WebDriverWait(driver, 5).until(
-                    EC.presence_of_element_located((By.ID, "high-price"))
-                )
-                if element1 == True or element2 == True:
-                    pass
-            except:
-                pass
-            finally:
-                if low_prices[i] != None:
-                    self.low_pr = driver.find_element_by_id('low-price')
-                    self.low_pr.send_keys(low)
+            # try:
+            #     element1 = WebDriverWait(driver, 5).until(
+            #         EC.presence_of_element_located((By.ID, "low-price"))
+            #     )
+            #     element2 = WebDriverWait(driver, 5).until(
+            #         EC.presence_of_element_located((By.ID, "high-price"))
+            #     )
+            #     if element1 == True or element2 == True:
+            #         pass
+            # except:
+            #     pass
+            # finally:
+            #     if low_prices[i] != None:
+            #         self.low_pr = driver.find_element_by_id('low-price')
+            #         self.low_pr.send_keys(low)
  
-                if high_prices[i] != None:
-                    self.high_pr = driver.find_element_by_id('high-price')
-                    self.high_pr.send_keys(high)
+            #     if high_prices[i] != None:
+            #         self.high_pr = driver.find_element_by_id('high-price')
+            #         self.high_pr.send_keys(high)
  
-                if high_prices[i] == None and low_prices[i] != None:
-                    self.low_pr.send_keys(Keys.ENTER)
+            #     if high_prices[i] == None and low_prices[i] != None:
+            #         self.low_pr.send_keys(Keys.ENTER)
  
-                elif low_prices[i] == None and high_prices[i] != None:
-                    self.high_pr.send_keys(Keys.ENTER)
+            #     elif low_prices[i] == None and high_prices[i] != None:
+            #         self.high_pr.send_keys(Keys.ENTER)
  
-                elif low_prices[i] != None and high_prices[i] != None:
-                    self.high_pr.send_keys(Keys.ENTER)
+            #     elif low_prices[i] != None and high_prices[i] != None:
+            #         self.high_pr.send_keys(Keys.ENTER)
  
-            try:
-                element1 = WebDriverWait(driver, 5).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'New')]"))
-                )
-                element2 = WebDriverWait(driver, 5).until(
-                    EC.element_to_be_clickable(
-                        (By.XPATH, "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'Used')]"))
-                )
-                if element1 == True or element2 == True:
-                    pass
-            except:
-                pass
-            finally:
-                if conditions[i] != None:
-                    if conditions[i].lower() == 'new':
-                        New = driver.find_element_by_xpath(
-                            "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'New')]")
-                        New.click()
- 
-                    elif conditions[i].lower() == 'used':
-                        Used = driver.find_element_by_xpath(
-                            "(//span[contains(text(),'Item Condition')]/following::span[@class='a-size-base a-color-base'])[contains(text(),'Used')]")
-                        Used.click()
- 
-                    else:
-                        raise CloseSpider(
-                            'Please enter a valid Item Condition! or do not pass any condition if you do not want any condition')
  
             if product_filters[i] != None:
-                if product_filters[i].lower() == 'featured':
+                if product_filters[i].lower() == 'relevance':
                     pass
  
             try:
                 elementA = WebDriverWait(driver, 5).until(
                     EC.presence_of_element_located(
-                        (By.ID, "s-result-sort-select"))
+                        (By.XPATH, "//div[@class='_32-f']"))
                 )
                 elementB = WebDriverWait(driver, 5).until(
-                    EC.element_to_be_clickable((By.ID, "s-result-sort-select"))
+                    EC.element_to_be_clickable((By.XPATH, "//div[@class='_32-f']"))
                 )
                 if elementA or elementB == True:
                     pass
-                if product_filters[i] != None and product_filters[i] != 'featured':
+                if product_filters[i] != None and product_filters[i] != 'relevance':
                     if product_filters[i].lower() == 'low to high':
-                        sort_btn = driver.find_element_by_id(
-                            's-result-sort-select')
-                        sort_btn.send_keys(Keys.ENTER)
+                        sort_btn = driver.find_element_by_xpath(
+                            "//div[@class='_32-f']")
+                        sort_btn.click()
  
-                        low_high = driver.find_element_by_id(
-                            's-result-sort-select_1')
+                        low_high = driver.find_element_by_xpath(
+                            '(//div[@class="_3vL1"])[2]')
                         low_high.click()
  
                     if product_filters[i].lower() == 'high to low':
-                        sort_btn = driver.find_element_by_id(
-                            's-result-sort-select')
-                        sort_btn.send_keys(Keys.ENTER)
+                        sort_btn = driver.find_element_by_xpath(
+                            "//div[@class='_32-f']")
+                        sort_btn.click()
  
-                        high_low = driver.find_element_by_id(
-                            's-result-sort-select_2')
+                        high_low = driver.find_element_by_xpath(
+                            '(//div[@class="_3vL1"])[3]')
                         high_low.click()
  
-                    if product_filters[i].lower() == 'average customer review':
-                        sort_btn = driver.find_element_by_id(
-                            's-result-sort-select')
-                        sort_btn.send_keys(Keys.ENTER)
+                    if product_filters[i].lower() == 'new':
+                        sort_btn = driver.find_element_by_xpath(
+                            "//div[@class='_32-f']")
+                        sort_btn.click()
  
-                        avg_rv = driver.find_element_by_id(
-                            's-result-sort-select_3')
-                        avg_rv.click()
- 
-                    if product_filters[i].lower() == 'newest arrivals':
-                        sort_btn = driver.find_element_by_id(
-                            's-result-sort-select')
-                        sort_btn.send_keys(Keys.ENTER)
- 
-                        new_ar = driver.find_element_by_id(
-                            's-result-sort-select_4')
+                        new_ar = driver.find_element_by_xpath(
+                            '(//div[@class="_3vL1"])[1]')
                         new_ar.click()
  
             except Exception:
@@ -202,7 +165,7 @@ class PaytmmallSpider(scrapy.Spider):
  
                 try:
                     names_list = resp.xpath(
-                        "//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left']/following::span[1]/text()").getall()
+                        "//div[contains(text(),'Brand')]/following::label/span[@class='labelName']/text()").getall()
  
                     for nm in names_list:
                         pro_names.append(nm)
@@ -221,17 +184,11 @@ class PaytmmallSpider(scrapy.Spider):
                 try:
                     WebDriverWait(driver, 5).until(
                         EC.element_to_be_clickable(
-                            (By.XPATH, f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]"))
+                            (By.XPATH, f"(//div[contains(text(),'Brand')]/following::label)[{n}]"))
                     )
-                    
-                    try:
-                        see_more_btn = driver.find_element_by_xpath("(//span[@class='a-expander-prompt'])[2]")
-                        see_more_btn.click()
-                    except:
-                        pass
 
                     check_box = driver.find_element_by_xpath(
-                        f"(//span[contains(text(),'Brand')]/following::div[@class='a-checkbox a-checkbox-fancy s-navigation-checkbox aok-float-left'])[{n}]")
+                        f"(//div[contains(text(),'Brand')]/following::label)[{n}]")
                     check_box.click()
  
                 except:
@@ -247,7 +204,7 @@ class PaytmmallSpider(scrapy.Spider):
             resp = Selector(text=html)
  
             links = resp.xpath(
-                "//div[@class='a-section a-spacing-none']/h2/a/@href").getall()
+                "//div[@class='_3WhJ']/a/@href").getall()
  
             for link in links:
                 url = response.urljoin(link)
@@ -266,13 +223,13 @@ class PaytmmallSpider(scrapy.Spider):
         ID = response.meta.get('ID')
  
         Product_name = response.xpath(
-            'normalize-space(//span[@id="productTitle"]/text())').get()
+            'normalize-space(//h1[@class="NZJI"]/text())').get()
  
-        Product_price = self.remove_char(response.xpath(
-            '//td[@class="a-span12"]/span[1]/text()').get())
+        Product_price = '₹ ' + self.remove_char(response.xpath(
+            '//span[@class="_1V3w"]/text()').get())
  
         pd_img_url = response.xpath(
-            'normalize-space(//div[@id="imgTagWrapperId"]/img/@src)').get()
+            'normalize-space(//img[@class="_3v_O"]/@src)').get()
  
         Product_link = response.url
  
