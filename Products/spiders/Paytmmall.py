@@ -228,8 +228,10 @@ class PaytmmallSpider(scrapy.Spider):
         Product_price = '₹ ' + self.remove_char(response.xpath(
             '//span[@class="_1V3w"]/text()').get())
  
-        pd_img_url = response.xpath(
-            '//img[@class="_3v_O"]/@src').get().replace("?imwidth=64&impolicy=hq",'')
+        img_url_temp = response.xpath(
+            '//img[@class="_3v_O"]/@src').get()
+
+        pd_img_url = img_url_temp.replace("?imwidth=64&impolicy=hq",'')
  
         Product_link = response.url
  
