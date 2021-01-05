@@ -229,7 +229,7 @@ class PaytmmallSpider(scrapy.Spider):
             '//span[@class="_1V3w"]/text()').get())
  
         pd_img_url = response.xpath(
-            'normalize-space(//img[@class="_3v_O"]/@src)').get()
+            'normalize-space(//img[@class="_3v_O"]/@src)').get().replace("?imwidth=64&impolicy=hq",'')
  
         Product_link = response.url
  
@@ -259,3 +259,4 @@ class PaytmmallSpider(scrapy.Spider):
         loader.add_value('Seller', Seller)
  
         yield loader.load_item()
+        
