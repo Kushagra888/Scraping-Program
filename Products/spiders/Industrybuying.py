@@ -16,13 +16,13 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
  
  
-class AmazonSpider(scrapy.Spider):
-    name = 'Amazon'
+class IndustrybuyingSpider(scrapy.Spider):
+    name = 'Industrybuying'
  
     start_urls = ['https://www.amazon.in']
  
     def __init__(self, product_names=None, low_prices=None, high_prices=None, brand_names=None, conditions=None, product_filters=None, *args, **kwargs):
-        super(AmazonSpider, self).__init__(*args, **kwargs)
+        super(IndustrybuyingSpider, self).__init__(*args, **kwargs)
  
         self.page_sources = []
  
@@ -297,7 +297,7 @@ class AmazonSpider(scrapy.Spider):
  
         loader.add_value('Website_name', Website_name)
  
-        Seller = 'Amazon'
+        Seller = 'Industrybuying'
  
         loader.add_value('Seller', Seller)
  

@@ -4,9 +4,9 @@ import os
 from datetime import date
 from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
-from Products.spiders.Amazon import AmazonSpider
+from Products.spiders.Industrybuying import IndustrybuyingSpider
 
-f = open('Input_Amazon.csv', 'r')
+f = open('Input_Industrybuying.csv', 'r')
 read = csv.DictReader(f, delimiter = ',')
 
 p_names = []
@@ -49,7 +49,7 @@ for col in read:
 
 try:
     process = CrawlerProcess(settings=get_project_settings())
-    process.crawl(AmazonSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, conditions=p_cons, product_filters=p_fltrs)
+    process.crawl(IndustrybuyingSpider, product_names=p_names, low_prices=low_prs, high_prices=high_prs, brand_names=brands, conditions=p_cons, product_filters=p_fltrs)
     process.start()
 
 except Exception as exptn:
