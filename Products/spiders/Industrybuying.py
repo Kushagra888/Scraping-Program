@@ -240,7 +240,7 @@ class IndustrybuyingSpider(scrapy.Spider):
         Product_name = response.xpath(
             "normalize-space(//span[contains(@class,'productTitle')]/h1/text())").get()
 
-        Product_price = '₹' + self.remove_char(response.xpath(
+        Product_price = self.remove_char(response.xpath(
             "//span[@class='AH_PricePerPiece']/text()").get())
 
         pd_img_url = response.urljoin(response.xpath("normalize-space(//img[@class='mainImg zoom_img']/@src)").get())
@@ -253,7 +253,9 @@ class IndustrybuyingSpider(scrapy.Spider):
         loader.add_value('Product_name', Product_name)
 
         if Product_price is None:
-            Product_price = '₹0'
+            Product_price = '₹ 0'
+        else:
+            Product_price = '₹' + Product_price
 
         loader.add_value('Product_price', Product_price)
 
