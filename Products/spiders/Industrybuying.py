@@ -178,7 +178,7 @@ class IndustrybuyingSpider(scrapy.Spider):
                     names_list = resp.xpath(
                         "(//h3[contains(text(),'Brands')]/following::ul[@id='filter_name_brand_id']/li/label)/span/text()").getall()
 
-                    time.sleep(2)
+                    time.sleep(0.2)
 
                     for nm in names_list:
                         if nm != None:
@@ -188,7 +188,7 @@ class IndustrybuyingSpider(scrapy.Spider):
                             nm = nm.strip(rem)
                         pro_names.append(nm)
 
-                    time.sleep(1)
+                    time.sleep(0.2)
 
                     for s in range(1, len(pro_names)+1):
                         pro_num.append(s)
