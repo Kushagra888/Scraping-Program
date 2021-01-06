@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import re
+import time
 import socket
 import mysql.connector
 from shutil import which
@@ -177,6 +178,8 @@ class IndustrybuyingSpider(scrapy.Spider):
                     names_list = resp.xpath(
                         "(//h3[contains(text(),'Brands')]/following::ul[@id='filter_name_brand_id']/li/label)/span/text()").getall()
 
+                    time.sleep(2)
+
                     for nm in names_list:
                         if nm != None:
                             nm = nm.strip()
@@ -184,6 +187,8 @@ class IndustrybuyingSpider(scrapy.Spider):
                             rem = nm[result.start()-2:result.end()+1]
                             nm = nm.strip(rem)
                         pro_names.append(nm)
+
+                    time.sleep(1)
 
                     for s in range(1, len(pro_names)+1):
                         pro_num.append(s)
