@@ -66,7 +66,7 @@ USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTM
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
     'Products.pipelines.SQLlitePipeline': 200,
-    'Products.pipelines.AmazonImagesPipeline': 1,
+    'Products.pipelines.BitfangImagesPipeline': 1,
 }
 
 IMAGES_STORE = 'C:/Users/kushu/Desktop/Products'
@@ -98,6 +98,6 @@ FEED_EXPORT_ENCODING = 'UTF-8'
 
 FEED_FORMAT = 'CSV'
 
-FEED_URI = './Amazon_csv.csv'
+FEED_URI = './Bitfang_csv.csv'
 
 FEED_EXPORT_FIELDS = ['ID', 'Product_name', 'Product_price', 'Product_link', 'Website_name', 'Seller', 'Machine_name', 'Time']
